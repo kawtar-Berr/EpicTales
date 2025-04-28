@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useEffect, useState } from 'react';
 import NavbarAdmin from '@/components/NavbarAdmin';
 import SidebarAdmin from '@/components/SidebarAdmin';
@@ -11,14 +10,15 @@ import ModalModifierUser from '@/components/ModalEditUser';
 
 const USERS_PER_PAGE = 8;
 
-export default function UsersPage() {
+export default function ModerateursPage() {
   interface User {
     id: number;
     nom: string;
     email: string;
     username: string;
-    isAbandoner: boolean; // <- 👈 ajouter
-    IsReported: boolean;  // <- 👈 ajouter
+    isAbandoner: boolean;
+    IsReported: boolean;
+    role: string;
   }
 
   const [users, setUsers] = useState<User[]>([]);
@@ -35,9 +35,10 @@ export default function UsersPage() {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/utilisateurs');
       const data = await response.json();
-      setUsers(data);
+      const moderateurs = data.filter((u: User) => u.role === 'Moderateur');
+      setUsers(moderateurs);
     } catch (error) {
-      console.error("Erreur lors de la récupération des utilisateurs :", error);
+      console.error("Erreur lors de la récupération des modérateurs :", error);
     }
   };
 
@@ -51,7 +52,7 @@ export default function UsersPage() {
   };
 
   const handleDeleteClick = async (userId: number) => {
-    const confirmDelete = window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?");
+    const confirmDelete = window.confirm("Voulez-vous vraiment supprimer ce modérateur ?");
     if (!confirmDelete) return;
 
     try {
@@ -72,9 +73,9 @@ export default function UsersPage() {
   const handleReportToggle = async (user: User) => {
     const action = user.IsReported ? "annuler le signalement" : "signaler ce compte";
     const confirmToggle = window.confirm(`Voulez-vous vraiment ${action} ?`);
-  
+
     if (!confirmToggle) return;
-  
+
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/utilisateurs/${user.id}`, {
         method: 'PUT',
@@ -85,9 +86,9 @@ export default function UsersPage() {
           IsReported: !user.IsReported,
         }),
       });
-  
+
       if (response.ok) {
-        fetchUsers(); // Rafraîchir la liste
+        fetchUsers();
       } else {
         console.error("Erreur lors de la mise à jour du statut de signalement.");
       }
@@ -95,7 +96,6 @@ export default function UsersPage() {
       console.error("Erreur réseau :", error);
     }
   };
-  
 
   return (
     <div className="flex">
@@ -104,7 +104,7 @@ export default function UsersPage() {
         <NavbarAdmin />
         <main className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-extrabold text-purple-700">Utilisateurs</h1>
+            <h1 className="text-3xl font-extrabold text-purple-700">Modérateurs</h1>
             <button
               onClick={() => setIsModalOpen(true)}
               className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded flex items-center gap-2"
@@ -136,20 +136,20 @@ export default function UsersPage() {
                           className="text-green-600 cursor-pointer hover:scale-110 transition"
                           onClick={() => handleEditClick(user)}
                         />
-                          {user.IsReported ? (
-                              <CheckCircle2
-                                className="text-green-500 cursor-pointer hover:scale-110 transition"
-                                onClick={() => handleReportToggle(user)}
-                              />
-                            ) : (
-                              <UserX
-                                className="text-yellow-500 cursor-pointer hover:scale-110 transition"
-                                onClick={() => handleReportToggle(user)}
-                              />
-                            )}                     
-                          <Trash2
+                        {user.IsReported ? (
+                          <CheckCircle2
+                            className="text-green-500 cursor-pointer hover:scale-110 transition"
+                            onClick={() => handleReportToggle(user)}
+                          />
+                        ) : (
+                          <UserX
+                            className="text-yellow-500 cursor-pointer hover:scale-110 transition"
+                            onClick={() => handleReportToggle(user)}
+                          />
+                        )}
+                        <Trash2
                           className="text-red-600 cursor-pointer hover:scale-110 transition"
-                          onClick={() => handleDeleteClick(user.id)} // 👈 suppression ici
+                          onClick={() => handleDeleteClick(user.id)}
                         />
                       </div>
                     </td>

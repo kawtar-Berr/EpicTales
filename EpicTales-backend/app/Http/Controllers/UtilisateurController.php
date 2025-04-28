@@ -55,4 +55,29 @@ class UtilisateurController extends Controller
         $nombreUtilisateurs = Utilisateur::count();
         return response()->json(['count' => $nombreUtilisateurs]);
     }
+
+    public function rooms($id)
+    {
+        $utilisateur = Utilisateur::findOrFail($id);
+        return $utilisateur->storyRoomsRejointes;
+    }
+
+    public function rejoindreRoom($idUtilisateur, $idRoom)
+    {
+        $utilisateur = Utilisateur::findOrFail($idUtilisateur);
+        $utilisateur->storyRoomsRejointes()->syncWithoutDetaching([$idRoom]);
+
+        return response()->json(['message' => 'Utilisateur ajouté à la room.']);
+    }
+
+    public function quitterRoom($idUtilisateur, $idRoom)
+    {
+        $utilisateur = Utilisateur::findOrFail($idUtilisateur);
+        $utilisateur->storyRoomsRejointes()->detach($idRoom);
+
+        return response()->json(['message' => 'Utilisateur retiré de la room.']);
+    }
+
+
+
 }
