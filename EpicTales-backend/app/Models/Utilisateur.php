@@ -21,4 +21,33 @@ class Utilisateur extends Authenticatable
         'IsReported' => 'boolean',
         'isAbandoner' => 'boolean',
     ];
+
+    public function storyRoomsCreees() {
+        return $this->hasMany(StoryRoom::class, 'id_createur');
+    }
+    
+    public function histoiresCreees() {
+        return $this->hasMany(Histoire::class, 'id_createur');
+    }
+    
+    public function chapitres() {
+        return $this->hasMany(Chapitre::class, 'id_createur');
+    }
+    
+    public function votes() {
+        return $this->hasMany(Vote::class, 'id_utilisateur');
+    }
+    
+    public function notifications() {
+        return $this->hasMany(Notification::class, 'id_utilisateur');
+    }
+
+    public function storyRoomsRejointes()
+    {
+        return $this->belongsToMany(StoryRoom::class, 'storyroom_utilisateur', 'utilisateur_id', 'storyroom_id');
+    }
+
+    
+
 }
+
