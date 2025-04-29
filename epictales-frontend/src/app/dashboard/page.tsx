@@ -17,6 +17,8 @@ import {
 } from 'chart.js';
 import { UserIcon, UsersIcon, BookmarkIcon, ChatAltIcon } from '@heroicons/react/outline';
 import styles from '../../styles/dashboard.module.css'; // Import du CSS module
+import { apiHelpers } from '@/utils/apiClient';
+
 
 // Enregistrement des composants ChartJS nécessaires
 ChartJS.register(
@@ -59,15 +61,15 @@ const pieData = {
 
 const Dashboard = () => {
   const [nombreUtilisateurs, setNombreUtilisateurs] = useState(0);
-
+  const [userCount, setUserCount] = useState<number>(0);
   useEffect(() => {
     const fetchNombreUtilisateurs = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/utilisateurs/count');
-        const data = await response.json();
-        setNombreUtilisateurs(data.count);
+        const response = await apiHelpers.getCount();
+        setUserCount(response.count); // Assuming the API returns { count: number }
+        console.log('Count:', response);
       } catch (error) {
-        console.error('Erreur lors de la récupération du nombre d\'utilisateurs:', error);
+        console.error('Failed to get count:', error);
       }
     };
 
@@ -90,7 +92,7 @@ const Dashboard = () => {
             <div className="bg-white rounded-lg shadow-lg p-6 flex items-center justify-between space-x-4 border border-gray-200 transition transform duration-500 hover:scale-105">
               <div className="flex flex-col">
                 <span className={`${styles.statsTitle} text-xl opacity-50 text-sm font-semibold`}>Utilisateurs</span>
-                <span className="text-3xl font-bold"> {nombreUtilisateurs} </span>
+                <span className="text-3xl font-bold"> {userCount} </span>
               </div>
               <div className={`${styles.bgLightGray} p-4 rounded-lg`}>
                 <UserIcon className="h-10 w-10 text-[#5e17eb]" />

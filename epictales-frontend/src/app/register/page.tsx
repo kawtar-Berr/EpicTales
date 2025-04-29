@@ -28,7 +28,7 @@ export default function RegisterPage() {
           router.push('/accueil/profil');
         }
       } else {
-        setError(loginData.message || 'Erreur lors de la connexion');
+        setError(data || 'Erreur lors de la connexion');
       }
     } else {
       setError(data.message || 'Erreur lors de l\'inscription');
