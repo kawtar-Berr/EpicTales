@@ -81,7 +81,58 @@ export const apiHelpers = {
       throw error;
     }
   },
+  updateUserReportStatus: async (userId: number, isReported: boolean) => {
+    try {
+      const response = await apiClient.put(`/utilisateurs/${userId}`, {
+        IsReported: isReported
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`PUT /utilisateurs/${userId} failed:`, error);
+      throw error;
+    }
+  },
 
+  getUsers: async () => {
+    try {
+      const response = await apiClient.get('/utilisateurs', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      return response.data;
+    } catch (error: any) {
+      console.error('Count endpoint failed:', {
+        status: error.response?.status,
+        message: error.message,
+        data: error.response?.data
+      });
+      throw error;
+    }
+  },
+  deleteUser: async (userId: number) => {
+    try {
+      const response = await apiClient.delete(`/utilisateurs/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Accept': 'application/json'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`DELETE /utilisateurs/${userId} failed:`, error);
+      throw error;
+    }
+  },
  // Updated count endpoint method
  getCount: async () => {
   try {
@@ -103,5 +154,11 @@ export const apiHelpers = {
   }
 }
 };
+
+
+ // Updated count endpoint method
+ 
+
+
 
 export default apiClient;

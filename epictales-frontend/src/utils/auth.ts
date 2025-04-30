@@ -16,6 +16,7 @@ interface LoginResponse {
   token: string;
   utilisateur: User;
 }
+
 export async function login({ email, motDePasse }: { email: string; motDePasse: string }) {
   try {
     console.log('Attempting login for:', email);

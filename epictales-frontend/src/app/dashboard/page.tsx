@@ -18,6 +18,9 @@ import {
 import { UserIcon, UsersIcon, BookmarkIcon, ChatAltIcon } from '@heroicons/react/outline';
 import styles from '../../styles/dashboard.module.css'; // Import du CSS module
 import { apiHelpers } from '@/utils/apiClient';
+//import  withAuth  from '@/utils/withAuth';
+//import withAuth from '@/utils/withAuth';
+import { withAuth } from '../../utils/withAuth';
 
 
 // Enregistrement des composants ChartJS nécessaires
@@ -156,4 +159,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
+//export default Dashboard;
