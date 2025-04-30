@@ -8,6 +8,7 @@ import { Trash2, UserPlus, UserX, Pen, CheckCircle2 } from 'lucide-react';
 import styles from '@/styles/users.module.css';
 import ModalUser from '@/components/ModalAjoutUser';
 import ModalModifierUser from '@/components/ModalEditUser';
+import apiClient, { apiHelpers } from '@/utils/apiClient';
 
 const USERS_PER_PAGE = 8;
 
@@ -33,8 +34,8 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/utilisateurs');
-      const data = await response.json();
+      const response = apiHelpers.get('/utilisateurs');
+      const data = await response
       setUsers(data);
     } catch (error) {
       console.error("Erreur lors de la récupération des utilisateurs :", error);
@@ -55,12 +56,10 @@ export default function UsersPage() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/utilisateurs/${userId}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        setUsers((prev) => prev.filter((user) => user.id !== userId));
+      const response =await apiHelpers.deleteUser(userId);
+      
+      if (response) {
+        fetchUsers(); // Rafraîchir la liste
       } else {
         console.error("Erreur lors de la suppression.");
       }
@@ -76,23 +75,22 @@ export default function UsersPage() {
     if (!confirmToggle) return;
   
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/utilisateurs/${user.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          IsReported: !user.IsReported,
-        }),
-      });
-  
-      if (response.ok) {
-        fetchUsers(); // Rafraîchir la liste
+      // Add proper type for response
+      const response = await apiHelpers.updateUserReportStatus(user.id, !user.IsReported);
+      
+      if (response) {
+        // Refresh the users list after successful update
+        await fetchUsers();
+        
+        // Show success message
+        alert(`Le compte a été ${user.IsReported ? 'désignalé' : 'signalé'} avec succès`);
       } else {
-        console.error("Erreur lors de la mise à jour du statut de signalement.");
+        throw new Error('La mise à jour a échoué');
       }
     } catch (error) {
-      console.error("Erreur réseau :", error);
+      // Show error message to user
+      alert("Erreur lors de la mise à jour du statut");
+      console.error("Erreur lors de la mise à jour du statut :", error);
     }
   };
   
