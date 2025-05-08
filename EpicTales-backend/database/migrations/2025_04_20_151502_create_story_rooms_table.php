@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->enum('statut', ['Public', 'Privé']);
-            $table->date('dateCreation')->default(DB::raw('CURRENT_DATE'));
+            // $table->date('dateCreation')->default(DB::raw('CURDATE()'));
+            $table->date('dateCreation');
             $table->integer('code')->unique();
             $table->binary('link')->nullable();
             $table->foreignId('id_createur')->constrained('utilisateurs')->onDelete('cascade');

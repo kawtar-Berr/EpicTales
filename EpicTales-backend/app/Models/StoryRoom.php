@@ -28,6 +28,14 @@ class StoryRoom extends Model
         return $this->hasMany(Histoire::class, 'id_storyroom');
     }
 
-    
+    protected static function boot()
+{
+    parent::boot();
+    static::creating(function ($model) {
+        if (!$model->dateCreation) {
+            $model->dateCreation = now()->toDateString();
+        }
+    });
+}
 }
 
