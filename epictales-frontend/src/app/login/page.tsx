@@ -22,7 +22,7 @@ export default function LoginPage() {
         router.push('/accueil');
       }
     } else {
-      setError(data.message || 'Identifiants invalides');
+      setError(data.error || 'Identifiants invalides');
     }
   };
 
