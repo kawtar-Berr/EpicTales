@@ -9,7 +9,7 @@ pipeline {
         stage('Install frontend deps') {
             steps {
                 dir('epictales-frontend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline {
         stage('Build frontend') {
             steps {
                 dir('epictales-frontend') {
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
@@ -25,9 +25,9 @@ pipeline {
         stage('Install backend deps') {
             steps {
                 dir('epictales-backend') {
-                    sh 'composer install'
-                    sh 'php artisan config:clear'
-                    sh 'php artisan route:clear'
+                    bat 'composer install'
+                    bat 'php artisan config:clear'
+                    bat 'php artisan route:clear'
                 }
             }
         }
@@ -35,11 +35,11 @@ pipeline {
         stage('Run Laravel tests') {
             steps {
                 dir('epictales-backend') {
-                    sh './vendor/bin/phpunit'
+                    bat 'vendor\\bin\\phpunit'
                 }
             }
         }
-    } // ← fermeture de stages
+    } // fin stages
 
     post {
         success {
@@ -49,4 +49,4 @@ pipeline {
             echo '❌ Build failed.'
         }
     }
-} // ← fermeture de pipeline
+}
