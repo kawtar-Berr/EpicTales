@@ -16,15 +16,13 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->enum('statut', ['Public', 'Privé']);
-            // $table->date('dateCreation')->default(DB::raw('CURDATE()'));
             $table->date('dateCreation');
-            $table->integer('code')->unique();
-            $table->binary('link')->nullable();
+            $table->string('code', 10)->unique(); // <-- string pour code unique
+            $table->string('link')->nullable();   // <-- string pour le lien
             $table->foreignId('id_createur')->constrained('utilisateurs')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

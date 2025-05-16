@@ -1,18 +1,20 @@
 // app/page.tsx
 'use client';
-
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import StoryCarousel from '@/components/StoryCarousel';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
-import Image from 'next/image';
+import AddStoryRoom from '@/components/ModalAddRoom';
+import { Toaster } from "sonner";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <Toaster />
+      <Navbar isLoggedIn={true}/>
       <main className="flex-grow">
         <HeroSection />
         <StoriesSection />
@@ -24,6 +26,7 @@ export default function HomePage() {
 }
 
 function HeroSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <section className="w-full py-12 bg-gradient-to-b from-purple-600 to-blue-500 text-white">
       <div className="container mx-auto px-4 py-16 text-center">
@@ -58,14 +61,14 @@ function HeroSection() {
             Rejoindre une salle
           </Button>
           <Button
-            as={Link}
-            href="/create-room"
+            onPress={() => setIsModalOpen(true)}
             className="bg-white text-purple-600 font-medium rounded-md hover:bg-gray-100 transition-all"
             size="lg"
           >
             Créer une salle
           </Button>
         </motion.div>
+        <AddStoryRoom isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </section>
   );
@@ -76,6 +79,8 @@ function StoriesSection() {
     { id: 1, title: "Histoire 1", description: "A brief description of the story goes here." },
     { id: 2, title: "Histoire 2", description: "A brief description of the story goes here." },
     { id: 3, title: "Histoire 3", description: "A brief description of the story goes here." },
+    { id: 4, title: "Histoire 4", description: "A brief description of the story goes here." },
+    { id: 5, title: "Histoire 5", description: "A brief description of the story goes here." },
   ];
 
   return (
@@ -90,52 +95,31 @@ function StoriesSection() {
           <h2 className="text-3xl font-bold inline-flex items-center">
             Explorer nos Histoires 
             <span className="ml-2">
-              <Image 
-                src="/images/book-icon.png" 
-                alt="Book icon" 
-                width={32} 
-                height={32}
-                className="object-contain"
-              />
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-8 w-8 text-purple-600" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" 
+                />
+              </svg>
             </span>
           </h2>
         </motion.div>
         
-        <div className="relative">
-          <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mx-10">
-            {stories.map((story) => (
-              <motion.div 
-                key={story.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="h-48 bg-gray-300 flex items-center justify-center">
-                  <span className="text-gray-500 text-xl font-light">300 × 200</span>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-lg mb-2">{story.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3">{story.description}</p>
-                  <Link href={`/stories/${story.id}`} className="text-purple-600 text-sm hover:underline">
-                    Lire plus ...
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <StoryCarousel stories={stories} />
+        </motion.div>
       </div>
     </section>
   );

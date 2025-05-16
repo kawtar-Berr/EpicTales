@@ -1,0 +1,59 @@
+/* src/styles/dashboard.module.css */
+
+.sidebarAdmin {
+    font-family: "Sacramento", "Pacifico", "Dancing Script", "Cormorant", serif;
+    color: black;
+  }
+  
+  .sidebarItem {
+    transition: background-color 0.3s, border 0.3s;
+  }
+  
+  .sidebarItem:hover {
+    background-color: rgba(128, 0, 128, 0.1); /* Light purple background on hover */
+  }
+  
+  .sidebarItem.active {
+    border: 2px solid rgba(128, 0, 128, 0.3); /* Light transparent purple border */
+    border-radius: 8px;
+    background-color: rgba(128, 0, 128, 0.1);
+  }
+  
+  /* Styles de la barre de recherche */
+  .searchInput {
+    padding-left: 2.5rem; /* Espace pour l'icône */
+    padding-right: 1rem;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .searchInput:focus,
+  .searchInput:hover {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+  
+  /* Statistiques */
+  .statsTitle {
+    font-family: "Sacramento", "Pacifico", "Dancing Script", "Cormorant", serif;
+    color: black; /* Titre en noir */
+  }
+  
+  /* Couleurs */
+  .text-lightPurple {
+    color: #9b7ed5; /* Light purple */
+  }
+  
+  /* Fond pour les icônes (light gray) */
+  .bgLightGray {
+    background-color: #d1d5db; /* Light gray background */
+    border-radius: 12px; /* Arrondir les coins */
+  }
+  
+  /* Pour les icônes en noir */
+  .text-black {
+    color: black; /* Noir pour les icônes */
+  } 
+  

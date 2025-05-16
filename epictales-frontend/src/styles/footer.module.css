@@ -1,0 +1,26 @@
+/* components/Footer.module.css */
+.footer {
+  background-color: var(--footer-bg);
+  padding: var(--padding-medium) var(--padding-large);
+  text-align: center;
+  font-family: var(--font-family);
+}
+
+.footer p {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.links {
+  margin-top: var(--padding-small);
+}
+
+.links a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.links a:hover {
+  color: var(--accent-gold);
+}

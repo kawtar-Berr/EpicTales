@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\StoryRoomController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 // Auth public
 Route::post('/register', [AuthController::class, 'register']);
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/utilisateurs/count', [UtilisateurController::class, 'count']);
     Route::apiResource('utilisateurs', UtilisateurController::class);
     Route::apiResource('storyrooms', StoryRoomController::class);
+    Route::post('/storyrooms/join', [StoryRoomController::class, 'joinByCode']);
 });
 
 // // Routes réservées à l'admin

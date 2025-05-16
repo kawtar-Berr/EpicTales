@@ -1,0 +1,213 @@
+/* app/HomePage.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Hero Section */
+.hero {
+  background: var(--hero-gradient);
+  padding: var(--padding-large) var(--padding-medium);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 80vh;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  margin-bottom: var(--padding-small);
+  font-weight: bold;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: var(--padding-medium);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: var(--padding-medium);
+}
+
+.primaryButton {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: var(--padding-small) var(--padding-medium);
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.primaryButton:hover {
+  background-color: #268f7c;
+}
+
+.secondaryButton {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: var(--padding-small) var(--padding-medium);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background-color: rgba(42, 157, 143, 0.1);
+}
+
+/* Explorer Section */
+.explorer {
+  padding: var(--padding-large) var(--padding-medium);
+  background-color: #fff;
+  font-family: var(--font-family);
+}
+
+.sectionContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: var(--padding-large);
+  color: var(--secondary-color);
+}
+
+.emoji {
+  margin-left: 0.5rem;
+}
+
+.storiesCarousel {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-medium);
+}
+
+.carouselArrow {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: var(--padding-small);
+  transition: transform 0.3s ease;
+}
+
+.carouselArrow:hover {
+  transform: scale(1.1);
+}
+
+.storiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--padding-medium);
+  flex: 1;
+}
+
+.storyCard {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  padding: var(--padding-medium);
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.storyCard:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.storyImageContainer {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--padding-small);
+}
+
+.storyImage {
+  width: 100%;
+  height: 100%;
+  background-image: url("/path-to-placeholder.jpg"); /* Remplacez par le chemin réel */
+  background-size: cover;
+  background-position: center;
+}
+
+.readMore {
+  display: inline-block;
+  margin-top: var(--padding-small);
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* How To Play Section */
+.howToPlay {
+  padding: var(--padding-large) var(--padding-medium);
+  background-color: #f9f9f9;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--padding-large);
+  margin-top: var(--padding-large);
+}
+
+.stepCard {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  padding: var(--padding-medium);
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.stepCard:hover {
+  transform: scale(1.05);
+  background-color: #f8f4ff;
+}
+
+.stepIcon {
+  font-size: 2.5rem;
+  margin-bottom: var(--padding-small);
+}
+
+.stepCard h3 {
+  margin-bottom: var(--padding-small);
+  font-size: 1.3rem;
+  color: var(--primary-color);
+}
+
+.stepCard p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Join Us Section */
+.joinUs {
+  padding: var(--padding-large) var(--padding-medium);
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.joinUsText {
+  font-size: 1.2rem;
+  margin-bottom: var(--padding-medium);
+  color: #333;
+}
+
+

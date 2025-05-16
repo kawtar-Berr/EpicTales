@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\StoryRoom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class StoryRoomController extends Controller
 {
@@ -14,17 +16,41 @@ class StoryRoomController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'statut' => 'nullable|string',
-            'code' => 'required|string|unique:story_rooms,code',
-            'link' => 'nullable|string',
-            'id_createur' => 'nullable|exists:utilisateurs,id',
+        $request->validate([
+            'nom'    => 'required|string|max:255',
+            'statut' => 'required|in:Public,Privé',
         ]);
 
-        return StoryRoom::create($validated);
+        // Générer un code unique
+        do {
+            $code = strtoupper(Str::random(6));
+        } while (StoryRoom::where('code', $code)->exists());
+
+        // Création de la salle avec date, code et lien
+        $storyRoom = StoryRoom::create([
+            'nom'          => $request->nom,
+            'statut'       => $request->statut,
+            'dateCreation' => now()->toDateString(),
+            'code'         => $code,
+            'link'         => url("/accueil/room/{$code}"),
+            'id_createur'  => Auth::id(),
+        ]);
+
+        return response()->json([
+            'id'   => $storyRoom->id,
+            'code' => $storyRoom->code,
+            'link' => $storyRoom->link,
+        ], 201);
     }
 
+    public function showByCode($code)
+    {
+        return StoryRoom::where('code', $code)->firstOrFail();
+    }
+    public function showByCreator($id)
+    {
+        return StoryRoom::where('id_createur', $id)->get();
+    }
     public function show($id)
     {
         return StoryRoom::findOrFail($id);
@@ -58,8 +84,4 @@ class StoryRoomController extends Controller
         // Relation many-to-many
         return $room->membres;
     }
-
-    
-
-
 }

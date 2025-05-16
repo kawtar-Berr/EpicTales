@@ -154,11 +154,4 @@ export const apiHelpers = {
   }
 }
 };
-
-
- // Updated count endpoint method
- 
-
-
-
 export default apiClient;
