@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -12,7 +11,7 @@ import Image from 'next/image';
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <Navbar isLoggedIn={true}/>
       <main className="flex-grow">
         <HeroSection />
         <StoriesSection />
