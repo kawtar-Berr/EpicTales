@@ -33,6 +33,7 @@ export default function ModalUser({ isOpen, onClose }: ModalUserProps) {
         <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
           <button
             onClick={onClose}
+            title="Close"
             className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
           >
             <X size={22} />

@@ -69,7 +69,8 @@ export default function ModalModifierRoom({ isOpen, onClose, selectedRoom }: Mod
     
     <div className="fixed inset-0 bg-transparent backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
-        <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+        <button onClick={onClose} title="Close" 
+        className="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
           <X size={22} />
         </button>
 
